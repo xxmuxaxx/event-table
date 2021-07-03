@@ -1,13 +1,28 @@
 import eventsApi from "../../api/eventsApi";
-import { SET_EVENTS, SET_IS_LOADED } from "../../constants";
+import {
+  SET_EVENTS,
+  SET_IS_LOADED,
+  SET_PAGE,
+  SET_PAGE_SIZE,
+} from "../../constants";
 
-export const fetchEventsPage = (page) => async (dispatch) => {
+export const fetchEventsPage = (page, pageSize) => async (dispatch) => {
   dispatch({ type: SET_IS_LOADED, payload: false });
-  const results = await eventsApi.getEventsPage(page);
+  const results = await eventsApi.getEventsPage(page, pageSize);
   dispatch(setEvents(results));
 };
 
 export const setEvents = (events) => ({
   type: SET_EVENTS,
   payload: events,
+});
+
+export const setPage = (page) => ({
+  type: SET_PAGE,
+  payload: page,
+});
+
+export const setPageSize = (pageSize) => ({
+  type: SET_PAGE_SIZE,
+  payload: pageSize,
 });

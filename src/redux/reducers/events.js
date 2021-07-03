@@ -1,7 +1,13 @@
-import { SET_EVENTS, SET_IS_LOADED } from "../../constants";
+import {
+  SET_EVENTS,
+  SET_IS_LOADED,
+  SET_PAGE,
+  SET_PAGE_SIZE,
+} from "../../constants";
 
 const initialState = {
-  page: 1,
+  page: 0,
+  pageSize: 100,
   isLoaded: false,
   events: [],
   totalEvents: null,
@@ -22,6 +28,18 @@ const events = (state = initialState, action) => {
       return {
         ...state,
         isLoaded: action.payload,
+      };
+
+    case SET_PAGE:
+      return {
+        ...state,
+        page: action.payload,
+      };
+
+    case SET_PAGE_SIZE:
+      return {
+        ...state,
+        pageSize: action.payload,
       };
 
     default:

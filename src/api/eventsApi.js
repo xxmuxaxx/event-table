@@ -4,15 +4,17 @@ import { URL } from "../constants";
 const instance = axios.create({ baseURL: `${URL}/events/` });
 
 const eventsApi = {
-  getEventsPage: async (page) => {
-    const response = await instance.get(`?_page=${page}&_limit=10`);
+  getEventsPage: async (page, pageSize) => {
+    const response = await instance.get(
+      `?_page=${page + 1}&_limit=${pageSize}`
+    );
     return {
       events: response.data,
       total: Number(response.headers["x-total-count"]),
     };
   },
   getDetailById: async (id) => {
-    const response = await instance.get(`?id=${id}&detail`);
+    const response = await instance.get(`?id=${id}&login`);
     return response.data;
   },
 };
