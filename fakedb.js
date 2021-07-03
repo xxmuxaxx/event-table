@@ -8,7 +8,7 @@ const result = ["Успешно", "Неуспешно"];
 
 module.exports = () => {
   const data = { events: [] };
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 231; i++) {
     data.events.push({
       id: i,
       date: faker.datatype.datetime(),

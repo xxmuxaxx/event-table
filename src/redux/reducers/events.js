@@ -1,4 +1,4 @@
-import { SET_EVENTS } from "../../constants";
+import { SET_EVENTS, SET_IS_LOADED } from "../../constants";
 
 const initialState = {
   page: 1,
@@ -13,8 +13,15 @@ const events = (state = initialState, action) => {
     case SET_EVENTS:
       return {
         ...state,
-        events: [...action.payload],
-        totalEvents: action.payload.length,
+        isLoaded: true,
+        events: [...action.payload.events],
+        totalEvents: action.payload.total,
+      };
+
+    case SET_IS_LOADED:
+      return {
+        ...state,
+        isLoaded: action.payload,
       };
 
     default:
