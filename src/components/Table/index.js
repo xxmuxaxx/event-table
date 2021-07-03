@@ -1,6 +1,6 @@
 import React from "react";
 
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid, ruRU } from "@material-ui/data-grid";
 
 const Table = ({
   cols,
@@ -10,7 +10,6 @@ const Table = ({
   rowCount,
   loading,
   handlePageChange,
-  handlePageSizeChange,
   isRowSelectable,
 }) => {
   return (
@@ -24,10 +23,10 @@ const Table = ({
         pageSize={pageSize}
         rowCount={rowCount}
         onPageChange={handlePageChange}
-        onPageSizeChange={handlePageSizeChange}
         isRowSelectable={isRowSelectable}
         paginationMode="server"
         loading={loading}
+        localeText={ruRU.props.MuiDataGrid.localeText}
       ></DataGrid>
     </div>
   );

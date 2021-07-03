@@ -1,12 +1,12 @@
 import axios from "axios";
 import { URL } from "../constants";
 
-const instance = axios.create({ baseURL: `${URL}/events/` });
+const instance = axios.create({ baseURL: URL });
 
 const eventsApi = {
   getEventsPage: async (page, pageSize) => {
     const response = await instance.get(
-      `?_page=${page + 1}&_limit=${pageSize}`
+      `/events/?_page=${page + 1}&_limit=${pageSize}`
     );
     return {
       events: response.data,
@@ -14,8 +14,8 @@ const eventsApi = {
     };
   },
   getDetailById: async (id) => {
-    const response = await instance.get(`?id=${id}&login`);
-    return response.data;
+    const response = await instance.get(`/eventsDetail/?id=${id}`);
+    return response.data[0];
   },
 };
 

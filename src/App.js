@@ -2,8 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { getEvents } from "./redux/selectors/events";
-import { fetchEventsPage, setPage, setPageSize } from "./redux/actions/events";
+import {
+  fetchDetailById,
+  fetchEventsPage,
+  setDetail,
+  setPage,
+  setPageSize,
+} from "./redux/actions/events";
+
 import Table from "./components/Table";
+import DetailCard from "./components/DetailCard";
 import Loader from "./components/Loader/Loader";
 
 const columns = [
@@ -22,39 +30,49 @@ const columns = [
   { field: "description", headerName: "Описание события", flex: 1 },
 ];
 
-const App = ({ eventsState, fetchEventsPage, setPage, setPageSize }) => {
-  const { page, pageSize, isLoaded, events, totalEvents } = eventsState;
+const App = ({
+  eventsState,
+  fetchEventsPage,
+  setPage,
+  fetchDetailById,
+  setDetail,
+}) => {
+  const { page, pageSize, isLoaded, events, totalEvents, detail } = eventsState;
 
-  const handlePageChange = (params) => {
-    setPage(params.page);
+  const handlePageChange = ({ page }) => {
+    setPage(page);
   };
 
-  const handlePageSizeChange = (params) => {
-    setPageSize(params.pageSize);
-  };
-
-  const isRowSelectable = (params) => {
-    console.log(params);
+  const isRowSelectable = ({ row }) => {
+    if (detail.id !== row.id) {
+      fetchDetailById(row.id);
+    }
   };
 
   React.useEffect(() => {
     fetchEventsPage(page, pageSize);
   }, [fetchEventsPage, page, pageSize]);
 
-  return isLoaded ? (
-    <Table
-      cols={columns}
-      rows={events}
-      page={page}
-      pageSize={pageSize}
-      rowCount={totalEvents}
-      loading={!isLoaded}
-      handlePageChange={handlePageChange}
-      handlePageSizeChange={handlePageSizeChange}
-      isRowSelectable={isRowSelectable}
-    ></Table>
-  ) : (
-    <Loader />
+  return (
+    <div style={{ display: "flex" }}>
+      {isLoaded ? (
+        <>
+          <Table
+            cols={columns}
+            rows={events}
+            page={page}
+            pageSize={pageSize}
+            rowCount={totalEvents}
+            loading={!isLoaded}
+            handlePageChange={handlePageChange}
+            isRowSelectable={isRowSelectable}
+          ></Table>
+          {detail.id && <DetailCard data={detail} />}
+        </>
+      ) : (
+        <Loader />
+      )}
+    </div>
   );
 };
 
@@ -67,6 +85,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchEventsPage(page, pageSize)),
   setPage: (page) => dispatch(setPage(page)),
   setPageSize: (pageSize) => dispatch(setPageSize(pageSize)),
+  fetchDetailById: (id) => dispatch(fetchDetailById(id)),
+  setDetail: (detail) => dispatch(setDetail(detail)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

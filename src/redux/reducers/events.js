@@ -1,4 +1,5 @@
 import {
+  SET_DETAIL,
   SET_EVENTS,
   SET_IS_LOADED,
   SET_PAGE,
@@ -40,6 +41,12 @@ const events = (state = initialState, action) => {
       return {
         ...state,
         pageSize: action.payload,
+      };
+
+    case SET_DETAIL:
+      return {
+        ...state,
+        detail: action.payload,
       };
 
     default:
