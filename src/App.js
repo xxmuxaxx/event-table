@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { getEvents } from "./redux/selectors/events";
 import { fetchEventsPage, setPage, setPageSize } from "./redux/actions/events";
 import Table from "./components/Table";
+import Loader from "./components/Loader/Loader";
 
 const columns = [
   { field: "id", hide: true },
@@ -53,7 +54,7 @@ const App = ({ eventsState, fetchEventsPage, setPage, setPageSize }) => {
       isRowSelectable={isRowSelectable}
     ></Table>
   ) : (
-    <h1>not loaded</h1>
+    <Loader />
   );
 };
 
